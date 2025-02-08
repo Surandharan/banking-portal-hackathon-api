@@ -39,11 +39,6 @@ spring.log
 
 # Application properties
 # You might want to ignore application.properties if it contains sensitive information
-application.properties
-application.yml
-application-*.properties
-application-*.yml
-
 # Database
 *.h2.db
 *.mv.db

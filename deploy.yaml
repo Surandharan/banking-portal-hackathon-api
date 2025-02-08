@@ -1,0 +1,42 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: banking-portal-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: banking-portal-api
+  template:
+    metadata:
+      labels:
+        app: banking-portal-api
+    spec:
+      containers:
+        - name: banking-portal-api
+          image: banking-portal-api:latest
+          envFrom:
+            - configMapRef:
+                name: banking-portal-api-configmap
+          ports:
+            - name: http
+              containerPort: 8080
+
+              protocol: TCP
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: banking-portal-api-svc
+spec:
+  ports:
+    - name: http-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: banking-portal-api
